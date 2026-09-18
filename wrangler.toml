@@ -15,7 +15,7 @@ APP_NAME = "Your Brand"
 #   wrangler d1 create cloth-store-db
 # Then paste the returned database_id below.
 [[d1_databases]]
-binding = "cloth_store_db"
+binding = "DB"
 database_name = "cloth-store-db"
 database_id = "96103940-126c-4912-8dfe-e7f8a23bc2a2"
 
