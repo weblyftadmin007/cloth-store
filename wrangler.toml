@@ -5,9 +5,6 @@ name = "cloth-store"
 compatibility_date = "2024-12-01"
 pages_build_output_dir = "public"
 
-[assets]
-directory = "public"
-
 # Public site settings (read from the settings table at runtime,
 # these are just fallbacks before the DB is set up)
 [vars]
