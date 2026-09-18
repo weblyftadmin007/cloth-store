@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="750" viewBox="0 0 600 750">
+  <rect width="600" height="750" fill="#f1ece3"/>
+  <rect x="16" y="16" width="568" height="718" fill="none" stroke="#1d1c1a1a" stroke-width="1"/>
+  <g transform="translate(0 20)"><path d="M300 250 C 258 240 236 252 220 276 L 182 312 L 220 352 L 250 326 L 250 570 L 350 570 L 350 326 L 380 352 L 418 312 L 380 276 C 364 252 342 240 300 250 Z" fill="#6b6a63"/><rect x="246" y="350" width="108" height="46" rx="12" fill="#00000014"/><path d="M258 264 C 265 232 335 232 342 264" fill="none" stroke="#00000030" stroke-width="10" stroke-linecap="round"/></g>
+  <text x="300" y="692" font-family="Georgia, 'Times New Roman', serif" font-size="21" letter-spacing="6" text-anchor="middle" fill="#1d1c1a">HEAVYWEIGHT OVERSIZED HOODIE</text>
+  <text x="300" y="720" font-family="Helvetica, Arial, sans-serif" font-size="12" letter-spacing="5" text-anchor="middle" fill="#8a857c">HOODIES</text>
+</svg>

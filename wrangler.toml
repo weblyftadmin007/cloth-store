@@ -1,0 +1,27 @@
+# Cloudflare Pages configuration
+# Docs: https://developers.cloudflare.com/pages/functions/
+
+name = "cloth-store"
+compatibility_date = "2024-12-01"
+pages_build_output_dir = "public"
+
+# Public site settings (read from the settings table at runtime,
+# these are just fallbacks before the DB is set up)
+[vars]
+APP_NAME = "Your Brand"
+
+# --- Cloudflare D1 database (orders + products + settings) ---
+# Create it once with:
+#   wrangler d1 create cloth-store-db
+# Then paste the returned database_id below.
+[[d1_databases]]
+binding = "DB"
+database_name = "cloth-store-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+# --- Cloudflare R2 bucket (product image uploads) ---
+# Create it once with:
+#   wrangler r2 bucket create cloth-store-images
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "cloth-store-images"

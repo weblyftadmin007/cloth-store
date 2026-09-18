@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="900" viewBox="0 0 800 900">
+  <rect width="800" height="900" fill="#efeae1"/>
+  <rect x="28" y="28" width="744" height="844" fill="none" stroke="#1d1c1a1f" stroke-width="1"/>
+  <circle cx="400" cy="330" r="34" fill="none" stroke="#1d1c1a" stroke-width="2.5"/>
+  <path d="M400 364 L 620 505 L 180 505 Z" fill="none" stroke="#1d1c1a" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M180 505 L 620 505" stroke="#1d1c1a" stroke-width="2.5"/>
+  <text x="400" y="640" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="500" letter-spacing="14" text-anchor="middle" fill="#1d1c1a">ATELIER</text>
+  <text x="400" y="700" font-family="Helvetica, Arial, sans-serif" font-size="15" letter-spacing="9" text-anchor="middle" fill="#8a857c">ESSENTIALS IN EVERY STITCH</text>
+  <rect x="330" y="740" width="140" height="1" fill="#9a7b4f"/>
+</svg>

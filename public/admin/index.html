@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Your Brand</title>
+  <link rel="stylesheet" href="/admin/admin.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>" />
+</head>
+<body>
+
+  <!-- Login screen -->
+  <div id="login-view" class="login-wrap" style="display:none">
+    <div class="login-card">
+      <div class="brand-mark">Store Admin</div>
+      <h1>Sign in</h1>
+      <p>Use your admin password to manage the store.</p>
+      <form id="login-form">
+        <div class="field-a">
+          <label>Password</label>
+          <input type="password" id="login-pass" autocomplete="current-password" placeholder="••••••••" required />
+        </div>
+        <button class="btn-a" style="width:100%" type="submit">Sign in</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- App shell -->
+  <div id="app-view" class="admin-body" style="display:none">
+    <aside class="sidebar">
+      <div class="title">Your Brand<small>Store admin</small></div>
+      <a class="nav-item" data-nav="dashboard" href="#dashboard">Dashboard</a>
+      <a class="nav-item" data-nav="products" href="#products">Products</a>
+      <a class="nav-item" data-nav="orders" href="#orders">Orders</a>
+      <a class="nav-item" data-nav="settings" href="#settings">Settings</a>
+      <span class="spacer"></span>
+      <a class="nav-item" href="/shop" target="_blank">Open storefront &rarr;</a>
+      <button class="logout-btn" id="logout-btn">Sign out</button>
+    </aside>
+
+    <main class="main" id="view-root"></main>
+  </div>
+
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal" id="modal-panel"></div>
+  </div>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

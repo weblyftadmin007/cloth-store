@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="750" viewBox="0 0 600 750">
+  <rect width="600" height="750" fill="#efeae1"/>
+  <rect x="16" y="16" width="568" height="718" fill="none" stroke="#1d1c1a1a" stroke-width="1"/>
+  <g transform="translate(0 20)"><path d="M300 260 C 258 252 240 260 226 282 L 192 314 L 226 354 L 254 330 L 254 570 L 346 570 L 346 330 L 374 354 L 408 314 L 374 282 C 360 260 342 252 300 260 Z" fill="#6e4640"/><path d="M300 264 L 300 570" stroke="#00000026" stroke-width="3"/><path d="M286 264 L 300 294 L 314 264 Z" fill="#00000018"/></g>
+  <text x="300" y="692" font-family="Georgia, 'Times New Roman', serif" font-size="21" letter-spacing="6" text-anchor="middle" fill="#1d1c1a">FLANNEL CHECK SHIRT</text>
+  <text x="300" y="720" font-family="Helvetica, Arial, sans-serif" font-size="12" letter-spacing="5" text-anchor="middle" fill="#8a857c">SHIRTS</text>
+</svg>

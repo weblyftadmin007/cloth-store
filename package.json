@@ -1,0 +1,18 @@
+{
+  "name": "cloth-store",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Clothing storefront + admin panel on Cloudflare Pages (D1 + R2), payments via Razorpay (UPI).",
+  "scripts": {
+    "dev": "wrangler pages dev public --d1 DB --r2 R2 --port 8788",
+    "deploy": "wrangler pages deploy public --project-name cloth-store",
+    "db:create": "wrangler d1 create cloth-store-db",
+    "db:setup": "wrangler d1 execute cloth-store-db --file=./schema.sql",
+    "db:setup:local": "wrangler d1 execute cloth-store-db --local --file=./schema.sql",
+    "test": "bash test/e2e-local.sh",
+    "assets": "node scripts/gen-assets.js"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
