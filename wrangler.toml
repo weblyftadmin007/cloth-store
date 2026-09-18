@@ -15,13 +15,14 @@ APP_NAME = "Your Brand"
 #   wrangler d1 create cloth-store-db
 # Then paste the returned database_id below.
 [[d1_databases]]
-binding = "DB"
+binding = "cloth_store_db"
 database_name = "cloth-store-db"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "96103940-126c-4912-8dfe-e7f8a23bc2a2"
 
 # --- Cloudflare R2 bucket (product image uploads) ---
 # Create it once with:
 #   wrangler r2 bucket create cloth-store-images
-[[r2_buckets]]
-binding = "R2"
-bucket_name = "cloth-store-images"
+# DISABLED - using Cloudinary instead
+# [[r2_buckets]]
+# binding = "R2"
+# bucket_name = "cloth-store-images"

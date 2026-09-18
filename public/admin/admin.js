@@ -218,6 +218,7 @@
     viewRoot.innerHTML = `
       <div class="page-head"><div><h1>Settings</h1><p class="hint">Store-wide text used across the storefront.</p></div></div>
       <div class="panel">
+        <h3 style="margin:0 0 12px">Storefront</h3>
         <div class="form-grid-2">
           <div class="field-a"><label>Brand name</label><input id="set-brand" value="${esc(f('brand'))}" /></div>
           <div class="field-a"><label>Announcement bar</label><input id="set-announcement" value="${esc(f('announcement'))}" placeholder="Free shipping on orders over Rs 1999" /></div>
@@ -226,6 +227,11 @@
           <div class="field-a"><label>Hero image URL</label><input id="set-heroImage" value="${esc(f('heroImage'))}" placeholder="/assets/hero.svg" /></div>
           <div class="field-a"><label>Support phone</label><input id="set-supportPhone" value="${esc(f('supportPhone'))}" placeholder="+91 98765 43210" /></div>
           <div class="field-a"><label>Footer text</label><input id="set-footerText" value="${esc(f('footerText'))}" /></div>
+        </div>
+        <h3 style="margin:24px 0 12px">Cloudinary (for image uploads in admin)</h3>
+        <div class="form-grid-2">
+          <div class="field-a"><label>Cloud Name</label><input id="set-cloudinaryCloudName" value="${esc(f('cloudinaryCloudName'))}" placeholder="your_cloud_name" /></div>
+          <div class="field-a"><label>Upload Preset (unsigned)</label><input id="set-cloudinaryUploadPreset" value="${esc(f('cloudinaryUploadPreset'))}" placeholder="your_unsigned_preset" /></div>
         </div>
         <button class="btn-a" id="save-settings">Save settings</button>
       </div>`;
@@ -238,6 +244,8 @@
         heroImage: document.getElementById('set-heroImage').value,
         supportPhone: document.getElementById('set-supportPhone').value,
         footerText: document.getElementById('set-footerText').value,
+        cloudinaryCloudName: document.getElementById('set-cloudinaryCloudName').value,
+        cloudinaryUploadPreset: document.getElementById('set-cloudinaryUploadPreset').value,
       };
       try {
         await api('/api/admin/settings', { method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
@@ -270,9 +278,11 @@
         <textarea id="p-images" rows="3" placeholder="/assets/p/classic-cotton-tee.svg">${esc(images)}</textarea>
       </div>
       <div class="field-a">
-        <label>Upload image (goes to Cloudflare R2)</label>
-        <div class="upload-box" id="upload-box">Click to choose a file (jpg, png, webp, up to 5MB)</div>
-        <input type="file" id="upload-file" accept="image/*" style="display:none" />
+        <label>Upload image (goes to Cloudinary)</label>
+        <button type="button" class="btn-a" id="cloudinary-upload-btn" style="width:auto">Open Cloudinary Upload</button>
+        <div class="hint" style="margin-top:6px">Configure Cloud Name & Upload Preset in Settings → Cloudinary section</div>
+        <div class="field-a" style="margin-top:8px"><label>Cloud Name</label><input id="cloudinary-cloud-name" type="text" value="${esc(settings.cloudinaryCloudName || '')}" placeholder="your_cloud_name" /></div>
+        <div class="field-a"><label>Upload Preset (unsigned)</label><input id="cloudinary-upload-preset" type="text" value="${esc(settings.cloudinaryUploadPreset || '')}" placeholder="your_unsigned_preset" /></div>
         <div class="upload-preview" id="upload-preview"></div>
       </div>
       <label style="display:flex;gap:8px;align-items:center;margin:6px 0"><input type="checkbox" id="p-featured" ${p && p.featured ? 'checked' : ''} /> Featured on home page</label>
@@ -315,25 +325,44 @@
   }
 
   function setupUpload() {
-    const box = document.getElementById('upload-box');
-    const input = document.getElementById('upload-file');
+    const btn = document.getElementById('cloudinary-upload-btn');
     const preview = document.getElementById('upload-preview');
-    box.addEventListener('click', () => input.click());
-    input.addEventListener('change', async () => {
-      const file = input.files && input.files[0];
-      if (!file) return;
-      const fd = new FormData();
-      fd.append('file', file);
-      try {
-        const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
-        const data = await res.json().catch(() => null);
-        if (!res.ok) throw new Error(data && data.error || 'Upload failed');
-        const ta = document.getElementById('p-images');
-        ta.value = ta.value.trim() ? ta.value.trim() + '\n' + data.url : data.url;
-        preview.innerHTML += `<img src="${esc(data.url)}" onerror="this.remove()" />`;
-        toast('Image uploaded');
-      } catch (err) { toast(err.message); }
-      input.value = '';
+    const cloudNameInput = document.getElementById('cloudinary-cloud-name');
+    const presetInput = document.getElementById('cloudinary-upload-preset');
+
+    let widget = null;
+
+    function initWidget() {
+      if (!window.cloudinary) return;
+      const cloudName = cloudNameInput.value.trim();
+      const preset = presetInput.value.trim();
+      if (!cloudName || !preset) return;
+      widget = cloudinary.createUploadWidget(
+        { cloudName, uploadPreset: preset, sources: ['local', 'url', 'camera'], maxFiles: 10 },
+        (error, result) => {
+          if (!error && result.event === 'success') {
+            const url = result.info.secure_url;
+            const ta = document.getElementById('p-images');
+            ta.value = ta.value.trim() ? ta.value.trim() + '\n' + url : url;
+            preview.innerHTML += `<img src="${esc(url)}" onerror="this.remove()" style="max-width:120px;margin:4px" />`;
+            toast('Image uploaded to Cloudinary');
+          } else if (error) {
+            toast(error.message || 'Upload failed');
+          }
+        }
+      );
+    }
+
+    cloudNameInput.addEventListener('input', initWidget);
+    presetInput.addEventListener('input', initWidget);
+    initWidget();
+
+    btn.addEventListener('click', () => {
+      if (!widget) {
+        initWidget();
+        if (!widget) { toast('Set Cloud Name and Upload Preset first'); return; }
+      }
+      widget.open();
     });
   }
 

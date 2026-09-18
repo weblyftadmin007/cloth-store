@@ -163,6 +163,8 @@ export async function onRequest(context) {
         'heroImage',
         'supportPhone',
         'footerText',
+        'cloudinaryCloudName',
+        'cloudinaryUploadPreset',
       ];
       for (const key of allowed) {
         if (b[key] === undefined || b[key] === null) continue;
@@ -175,26 +177,6 @@ export async function onRequest(context) {
     }
 
     return msg('Method not allowed', 405);
-  }
-
-  // ---------------- Upload (product images -> R2) ----------------
-  if (resource === 'upload' && method === 'POST') {
-    if (!r2) return msg('R2 is not configured', 500);
-
-    const form = await request.formData().catch(() => null);
-    if (!form) return msg('Invalid form data');
-    const file = form.get('file');
-    if (!file || typeof file === 'string') return msg('No file uploaded');
-
-    const buf = new Uint8Array(await file.arrayBuffer());
-    const MAX = 5 * 1024 * 1024;
-    if (buf.byteLength > MAX) return msg('File too large (max 5MB)');
-
-    const safeName = (file.name || 'image').replace(/[^a-zA-Z0-9.\-_]/g, '_');
-    const key = `products/${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${safeName}`;
-    await r2.put(key, buf, { httpMetadata: { contentType: file.type || 'application/octet-stream' } });
-
-    return json({ ok: true, url: '/media/' + key });
   }
 
   return msg('Not found', 404);
